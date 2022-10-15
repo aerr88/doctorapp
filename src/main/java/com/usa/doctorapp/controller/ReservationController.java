@@ -1,8 +1,10 @@
 package com.usa.doctorapp.controller;
 
 
+import com.usa.doctorapp.model.ClientReport;
 import com.usa.doctorapp.model.Doctor;
 import com.usa.doctorapp.model.Reservation;
+import com.usa.doctorapp.model.ReservationReport;
 import com.usa.doctorapp.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -40,4 +42,20 @@ public class ReservationController {
     public Reservation update (@RequestBody Reservation reservation){
         return reservationService.update(reservation);
     }
+
+    @GetMapping("/report-status")
+    public ReservationReport getReservationStatusReport(){
+        return  reservationService.getReservationStatusReport();
+    }
+
+    @GetMapping("/report-dates/{dateOne}/{dateTwo}")
+    public List<Reservation> getReservationReportDates(@PathVariable("dateOne")String dateOne, @PathVariable("dateTwo") String dateTwo){
+        return reservationService.getReservationPeriod(dateOne,dateTwo);
+    }
+
+    @GetMapping("/report-clients")
+    public List<ClientReport> getReportClients(){
+        return reservationService.getTopClients();
+    }
+
 }
